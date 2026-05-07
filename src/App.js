@@ -7,7 +7,7 @@ function App() {
   return (
     <>
     <Navbar title="Textify" aboutUs="About Us"/>
-    <TextArea headLine="Enter your text below"/>
+    <TextArea headLine="Enter your text to modify"/>
     </>
   );
 }

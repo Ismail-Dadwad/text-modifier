@@ -16,6 +16,16 @@ export default function TextArea(props){
         setText(text.toLowerCase()) 
         console.log('clicked')
     }
+    const capitalHandle = () => {
+        const newText = text
+        .split(' ') // Split text into an array of words
+        .map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(' '); // Join them back into a single string
+        setText(newText) 
+        console.log('clicked')
+    }
     const whiteSpaceHandle = () => {
         setText(text.replace(/\s+/g, ' ').trim()) 
         console.log('clicked')
@@ -26,17 +36,13 @@ export default function TextArea(props){
         
     // }
     const copyTextHandle = async () => {
-        const textarea = document.getElementById("floatingTextarea");
-        await navigator.clipboard.writeText(textarea.value);
+        await navigator.clipboard.writeText(text);
     };
-    // async function copyTextToClipboard(text) {
-    //     try {
-    //         await navigator.clipboard.writeText(text);
-    //         console.log('Text copied to clipboard');
-    //     } catch (err) {
-    //         console.error('Failed to copy: ', err);
-    //     }
-    //     }
+
+    const charCount = text.length;
+    const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+
+
 
     return(
         <div className="container my-5">
@@ -47,8 +53,13 @@ export default function TextArea(props){
             <div className="d-flex gap-2">
                 <button className="btn btn-primary mt-2" onClick={upperHandle}>Uppercase</button>
                 <button className="btn btn-primary mt-2" onClick={lowerHandle}>Lowercase</button>
+                <button className="btn btn-primary mt-2" onClick={capitalHandle}>First Word Capital</button>
                 <button className="btn btn-primary mt-2" onClick={whiteSpaceHandle}>Remove Whitespace</button>
-                <button className="btn btn-primary mt-2" onClick={copyTextHandle}>Copy Text</button>
+                <button className="btn btn-primary mt-2" onClick={copyTextHandle}>Copy All Text</button>
+            </div>
+            <div className='mt-3'>
+                <p className="mb-1">Total Words <b>{wordCount}</b></p>
+                <p>Total Characters <b>{charCount}</b></p>
             </div>
         </div>
     );
