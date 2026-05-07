@@ -1,7 +1,6 @@
 import {useState} from 'react'
 export default function TextArea(props){
 
-    const [count, setCount] = useState(0);
 
     const [text, setText] = useState('')
 
@@ -17,6 +16,27 @@ export default function TextArea(props){
         setText(text.toLowerCase()) 
         console.log('clicked')
     }
+    const whiteSpaceHandle = () => {
+        setText(text.replace(/\s+/g, ' ').trim()) 
+        console.log('clicked')
+    }
+    // const copyTextHandle = () => {
+    //     setText(navigator.clipboard.writeText(text)) 
+    //     console.log('clicked')
+        
+    // }
+    const copyTextHandle = async () => {
+        const textarea = document.getElementById("floatingTextarea");
+        await navigator.clipboard.writeText(textarea.value);
+    };
+    // async function copyTextToClipboard(text) {
+    //     try {
+    //         await navigator.clipboard.writeText(text);
+    //         console.log('Text copied to clipboard');
+    //     } catch (err) {
+    //         console.error('Failed to copy: ', err);
+    //     }
+    //     }
 
     return(
         <div className="container my-5">
@@ -24,11 +44,11 @@ export default function TextArea(props){
             <div className="">
                 <textarea value={text} className="form-control" onChange={upperChange} placeholder="Leave a comment here" id="floatingTextarea" rows="8"></textarea>
             </div>
-            <p>This is Count {count}</p>
             <div className="d-flex gap-2">
-                <button className="btn btn-primary mt-2" onClick={() => setCount(count + 1)}>UpperCase</button>
-                <button className="btn btn-primary mt-2" onClick={upperHandle}>Upper Case</button>
-                <button className="btn btn-primary mt-2" onClick={lowerHandle}>Lower Case</button>
+                <button className="btn btn-primary mt-2" onClick={upperHandle}>Uppercase</button>
+                <button className="btn btn-primary mt-2" onClick={lowerHandle}>Lowercase</button>
+                <button className="btn btn-primary mt-2" onClick={whiteSpaceHandle}>Remove Whitespace</button>
+                <button className="btn btn-primary mt-2" onClick={copyTextHandle}>Copy Text</button>
             </div>
         </div>
     );
